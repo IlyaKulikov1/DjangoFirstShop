@@ -1,0 +1,25 @@
+<body>
+    <div class="product">
+        <h2 id="name">{{ product.name }} </h2>
+        <p><span class="label">Категория:</span> <span id="category">{{ product.category }}</span></p>
+        <p><span class="label">Цена:</span> <span id="price">{{ product.price }}</span> руб.</p>
+        <p><span class="label">Создано:</span> <span id="created">{{ product.created }}</span></p>
+        <p><span class="label">Доступен:</span> <span id="available">{{ product.available }}</span></p>
+        <p><span class="label">Описание:</span></p>
+        <p id="description">{{ product.description }}</p>
+        <img id="image" src="{{ product.image.url }}" style="height:240px; max-height: 300px; max-width:300px;
+         width: 263px;" alt="Изображение продукта" />
+       <p>Рейтинг: {{ product.average_rating }}</p>
+    </div>
+</body>
+</html>
+<form method="post" action="{% url 'product_rate' product.id %}">
+  {% csrf_token %}
+  <label>Оцените продукт:</label><br>
+  {% for i in "12345"|make_list %}
+    <input type="radio" name="score" value="{{ i }}"
+      {% if product.user_rating == "i" %}checked{% endif %}>
+    <label for="star{{ i }}">{{ i }}</label><br>
+  {% endfor %}
+  <button type="submit">Отправить</button>
+</form>

@@ -1,0 +1,31 @@
+<h1>Товары</h1>
+
+<form method="get">
+    <input type="text" name="name" placeholder="Название" value="{{ request.GET.name }}">
+    <select name="category">
+        <option value="">Все категории</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="number" step="1" name="min_price" placeholder="Мин. цена" value="{{ request.GET.min_price }}">
+    <input type="number" step="1" name="max_price" placeholder="Макс. цена" value="{{ request.GET.max_price }}">
+    <select name="rating">
+        <option value="">Все рейтинги</option>
+        {% for rating in "12345" %}
+            <option value="{{ rating }}" {% if request.GET.average_rating == r|stringformat:"s" %}selected{% endif %}>{{ rating }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Фильтровать</button>
+</form>
+<div class="sidebar">
+    <a href="{% url 'create_product' %}">Создать товар</a>
+</div>
+<ul>
+    {% for product in products %}
+        <li><a href="{% url 'product_detail' product.id %}" target="_blank" >{{ product.name }}</a> || price: {{ product.price }} ||
+            rating: {{ product.average_rating|floatformat:-2 }} || {{ product.category.name }}
+
+        </li>
+    {% endfor %}
+</ul>

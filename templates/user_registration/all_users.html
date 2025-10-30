@@ -1,0 +1,7 @@
+<h1>Registration</h1>
+    {% for user in users %}
+    <li>{{ user.id }}
+    {{ user.username }}
+    {{ user.is_active }}
+    {{ user.password }}</li>
+{% endfor %}
