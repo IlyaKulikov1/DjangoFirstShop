@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('store', '0002_product_average_rating'),
+        ("store", "0002_product_average_rating"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='product',
-            name='rating_votes',
+            model_name="product",
+            name="rating_votes",
             field=models.PositiveIntegerField(default=0),
         ),
     ]
