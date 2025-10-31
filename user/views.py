@@ -1,15 +1,13 @@
 from django.contrib.auth import get_user_model, login
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-
 from user.forms import RegistrationForm
 
 
-# @require_POST
-def register(
-    request,
-):
-    if request.method == "POST":
-        form = RegistrationForm(request.POST)
+
+def register(request,):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             print("eto is.valid")
             user = form.save(commit=False)
@@ -24,10 +22,11 @@ def register(
             return render(request, "user_registration/registration.html", context)
     else:
         print("eto second else")
-        form = RegistrationForm()
-        context = {"form": form}
-        return render(request, "user_registration/registration.html", context)
-
+        form = UserCreationForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'user_registration/registration.html', context)
 
 def all_users_view(request):
     user = get_user_model()
