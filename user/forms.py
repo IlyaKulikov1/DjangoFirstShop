@@ -2,7 +2,9 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 # NOT NEEDED NOW!
-class RegistrationForm(forms.ModelForm):
-    class Meta:
-        model = get_user_model()
-        fields = ["username", "password"]
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={'id': 'password-field'})
+    )

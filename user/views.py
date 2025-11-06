@@ -1,17 +1,19 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from user.forms import RegistrationForm
+from django.contrib.auth import authenticate
+from user.forms import LoginForm
+from django.contrib.auth.decorators import login_required
 
 
-
-def register(request,):
+def register(request, ):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            print("eto is.valid")
+            # print("eto is.valid")
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data["password"])
+            # print(form.cleaned_data)
+            user.set_password(form.cleaned_data["password1"])
             user.save()
             login(request, user)
             return redirect("/store/")
@@ -28,8 +30,45 @@ def register(request,):
         }
         return render(request, 'user_registration/registration.html', context)
 
+
 def all_users_view(request):
     user = get_user_model()
     users = user.objects.all()
     context = {"users": users}
     return render(request, "user_registration/all_users.html", context)
+
+
+def user_login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect("/store/")
+            else:
+                context = {
+                    'form.errors': 'wrong username or password'
+                }
+                return render(request, 'user_login/login.html', context)
+    else:
+        form = LoginForm()
+    context = {
+        'form': form
+    }
+    # print(form.errors)
+    return render(request, 'user_login/login.html', context)
+
+
+@login_required
+def me(request):
+    user = request.user
+    context = {
+        'user': user
+    }
+    return render(request, 'user_login/Me.html', context)
+
+# def logout_view(request):
+#     logout(request)
+#     return redirect('/store/')

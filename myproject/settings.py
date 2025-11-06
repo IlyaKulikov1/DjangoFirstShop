@@ -127,3 +127,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = "D:/Projects/New_shop/media"
+
+LOGOUT_REDIRECT_URL = '/store/'
