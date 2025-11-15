@@ -1,0 +1,41 @@
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+venv/
+.venv/
+env/
+.env/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+
+# Version control
+.git/
+.gitignore
+
+# Build artifacts and logs
+dist/
+build/
+*.log
+
+
+db.sqlite3
+my_sqlite3_data.json
+my_sqlite3_data_pretty.json
+uv.lock
+pyprojectl.toml
