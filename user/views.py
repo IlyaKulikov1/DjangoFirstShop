@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from user.forms import LoginForm
@@ -42,14 +43,19 @@ def user_login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
+            # print('eto isvalid')
             # print(form.cleaned_data)
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            # print('eto auth', user)
             if user is not None:
+                # print('eto is not user')
                 login(request, user)
                 return redirect("/store/")
             else:
+                error = ValidationError('Wrong username or password', code='invalid')
+                form.add_error('username', error)
                 context = {
-                    'form.errors': 'wrong username or password'
+                    'form': form
                 }
                 return render(request, 'user_login/login.html', context)
     else:
@@ -61,7 +67,6 @@ def user_login(request):
     return render(request, 'user_login/login.html', context)
 
 
-@login_required
 def me(request):
     user = request.user
     context = {
@@ -69,6 +74,8 @@ def me(request):
     }
     return render(request, 'user_login/Me.html', context)
 
-# def logout_view(request):
-#     logout(request)
-#     return redirect('/store/')
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('/store/')
