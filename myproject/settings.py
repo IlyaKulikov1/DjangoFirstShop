@@ -78,10 +78,10 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Postgres_New_Shop',
+        'NAME': 'postgres_new_shop',
         'USER': 'user',
         'PASSWORD': 'admin',
-        'HOST': 'localhost',  # Or your PostgreSQL server's IP address/hostname
+        'HOST': 'host.docker.internal',  # Or your PostgreSQL server's IP address/hostname
         'PORT': '5432',       # Default PostgreSQL port
         # "ENGINE": "django.db.backends.sqlite3",
         # "NAME": BASE_DIR / "db.sqlite3",
