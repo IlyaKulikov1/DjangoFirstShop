@@ -1,0 +1,31 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    volumes:
+#      - .:/app
+    ports: [ "8000:8000" ]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:18-alpine
+    ports: [ "5432:5432" ]
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db_volume_test:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "mydatabase", "-U", "admin" ]
+      interval: 5s
+      timeout: 30s
+      start_period: 40s
+      retries: 3
+
+volumes:
+  db_volume_test:
