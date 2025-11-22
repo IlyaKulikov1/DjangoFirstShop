@@ -78,7 +78,7 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Postgres_New_Shop',
+        'NAME': 'mydatabase',
         'USER': 'user',
         'PASSWORD': 'admin',
         'HOST': 'localhost',  # Or your PostgreSQL server's IP address/hostname
@@ -132,6 +132,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = "D:/Projects/New_shop/media"
+MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGOUT_REDIRECT_URL = '/store/'
